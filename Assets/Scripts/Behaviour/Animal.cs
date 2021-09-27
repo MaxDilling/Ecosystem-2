@@ -199,7 +199,13 @@ public class Animal : LivingEntity {
         if (currentAction == CreatureAction.Eating) {
             if (foodTarget && hunger > 0) {
                 float eatAmount = Mathf.Min (hunger, Time.deltaTime * 1 / eatDuration);
-                eatAmount = ((Plant) foodTarget).Consume (eatAmount);
+
+                // Original Codes:
+                // eatAmount = ((Plant) foodTarget).Consume (eatAmount);
+
+                // Edited Codes:
+                eatAmount = foodTarget.Consume (eatAmount);
+
                 hunger -= eatAmount;
             }
         } else if (currentAction == CreatureAction.Drinking) {
@@ -227,25 +233,26 @@ public class Animal : LivingEntity {
         }
     }
 
-    void OnDrawGizmosSelected () {
-        if (Application.isPlaying) {
-            var surroundings = Environment.Sense (coord);
-            Gizmos.color = Color.white;
-            if (surroundings.nearestFoodSource != null) {
-                Gizmos.DrawLine (transform.position, surroundings.nearestFoodSource.transform.position);
-            }
-            if (surroundings.nearestWaterTile != Coord.invalid) {
-                Gizmos.DrawLine (transform.position, Environment.tileCentres[surroundings.nearestWaterTile.x, surroundings.nearestWaterTile.y]);
-            }
+    /* Caused Bug */
+    // void OnDrawGizmosSelected () {
+    //     if (Application.isPlaying) {
+    //         var surroundings = Environment.Sense (coord);
+    //         Gizmos.color = Color.white;
+    //         if (surroundings.nearestFoodSource != null) {
+    //             Gizmos.DrawLine (transform.position, surroundings.nearestFoodSource.transform.position);
+    //         }
+    //         if (surroundings.nearestWaterTile != Coord.invalid) {
+    //             Gizmos.DrawLine (transform.position, Environment.tileCentres[surroundings.nearestWaterTile.x, surroundings.nearestWaterTile.y]);
+    //         }
 
-            if (currentAction == CreatureAction.GoingToFood) {
-                var path = EnvironmentUtility.GetPath (coord.x, coord.y, foodTarget.coord.x, foodTarget.coord.y);
-                Gizmos.color = Color.black;
-                for (int i = 0; i < path.Length; i++) {
-                    Gizmos.DrawSphere (Environment.tileCentres[path[i].x, path[i].y], .2f);
-                }
-            }
-        }
-    }
+    //         if (currentAction == CreatureAction.GoingToFood) {
+    //             var path = EnvironmentUtility.GetPath (coord.x, coord.y, foodTarget.coord.x, foodTarget.coord.y);
+    //             Gizmos.color = Color.black;
+    //             for (int i = 0; i < path.Length; i++) {
+    //                 Gizmos.DrawSphere (Environment.tileCentres[path[i].x, path[i].y], .2f);
+    //             }
+    //         }
+    //     }
+    // }
 
 }
