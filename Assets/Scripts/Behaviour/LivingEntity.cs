@@ -2,6 +2,9 @@
 
 public class LivingEntity : MonoBehaviour {
 
+
+    // State:
+
     public int colourMaterialIndex;
     public Species species;
     public Material material;
@@ -13,7 +16,13 @@ public class LivingEntity : MonoBehaviour {
     [HideInInspector]
     public Coord mapCoord;
 
-    protected bool dead;
+    protected bool dead = false;
+    protected bool removed = false;
+
+    // Try fix pb
+    protected float amountRemaining = 1;
+    protected float decay = 0.1f;       // decay in percent per second 
+    //float consumeSpeed = 8;
 
     public virtual void Init (Coord coord) {
         this.coord = coord;
@@ -30,28 +39,30 @@ public class LivingEntity : MonoBehaviour {
         }
     }
 
-    protected virtual void Die (CauseOfDeath cause) {
+    protected virtual void Kill (CauseOfDeath cause) {
         if (!dead) {
             dead = true;
+        }
+    }
+    protected virtual void Remove () {
+        if (!removed) {
+            removed = true;
             Environment.RegisterDeath (this);
             Destroy (gameObject);
         }
     }
 
-    // Try fix pb
-    float amountRemaining = 1;
-    // const float consumeSpeed = 8;
-    // remove const
-    float consumeSpeed = 8;
 
     public float Consume (float amount) {
+        Kill(CauseOfDeath.Eaten); // make sure this entity is dead 
+
         float amountConsumed = Mathf.Max (0, Mathf.Min (amountRemaining, amount));
-        amountRemaining -= amount * consumeSpeed;
+        amountRemaining -= amountConsumed;
 
         transform.localScale = Vector3.one * amountRemaining;
 
         if (amountRemaining <= 0) {
-            Die (CauseOfDeath.Eaten);
+            Remove ();
         }
 
         return amountConsumed;
