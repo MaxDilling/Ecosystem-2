@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4684706620502999343}
   m_Father: {fileID: 0}
@@ -58,7 +59,7 @@ MonoBehaviour:
   currentAction: 0
   maleColour: {r: 0.3584906, g: 0.2330951, b: 0.13020648, a: 0}
   femaleColour: {r: 0.6509434, g: 0.45010933, b: 0.3224012, a: 0}
-  hunger: 0
+  hunger: 0.2
   thirst: 0
 --- !u!1001 &322534139445717557
 PrefabInstance:
