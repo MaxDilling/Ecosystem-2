@@ -24,7 +24,13 @@ public class Genes {
 
     public static Genes InheritedGenes (Genes mother, Genes father) {
         float[] values = new float[mother.values.Length];
-        // TODO: implement inheritance
+
+        // TODO 
+        for (int i = 0; i < values.Length; i++) {
+            float fromMother = RandomValue();
+            values[i] = mother.values[i] * fromMother + father.values[i] * (1 - fromMother);
+        }
+        
         Genes genes = new Genes (values);
         return genes;
     }
