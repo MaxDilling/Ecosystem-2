@@ -49,14 +49,12 @@ public class Environment : MonoBehaviour {
     }
 
     void OnDrawGizmos () {
-        /* 
-        if (showMapDebug) {
-            if (preyMap != null && mapCoordTransform != null) {
-                Coord coord = new Coord ((int) mapCoordTransform.position.x, (int) mapCoordTransform.position.z);
-                preyMap.DrawDebugGizmos (coord, mapViewDst);
-            }
-        }
-        */
+        // if (showMapDebug) {
+        //     if (preyMap != null && mapCoordTransform != null) {
+        //         Coord coord = new Coord ((int) mapCoordTransform.position.x, (int) mapCoordTransform.position.z);
+        //         preyMap.DrawDebugGizmos (coord, mapViewDst);
+        //     }
+        // }
     }
 
     public static void RegisterMove (LivingEntity entity, Coord from, Coord to) {
